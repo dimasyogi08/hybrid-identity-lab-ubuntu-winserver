@@ -90,12 +90,12 @@ Bagian ini membedah problem-solving dari masalah kritis yang terjadi selama fase
   b. Melakukan modifikasi Host Binding manual pada /etc/hosts di sisi Ubuntu (192.168.18.100 win2022-lab.dimsum.local win2022-lab).
   c.Menyempurnakan pemetaan realm di /etc/krb5.conf menggunakan blok [domain_realm].
 
-### Validation & Security Posture
+## Validation & Security Posture
 - Domain Status: Eksekusi realm list menampilkan status configured: kerberos-member.
 - Identity Resolution: Perintah id budi01@dimsum.local di Ubuntu berhasil memetakan UID dan GID tinggi yang di-generate langsung oleh sistem Active Directory.
 - SSO Login: Autentikasi berhasil dilakukan pada Desktop Login Screen Ubuntu menggunakan kredensial Windows tanpa perlu membuat Local User terlebih dahulu.
 
-### Alignment with Cloud Architecture
+## Alignment with Cloud Architecture
 Arsitektur lokal ini merupakan representasi fundamental dari apa yang terjadi di lingkungan Cloud computing. Pengetahuan mengenai DNS terpusat, Kerberos, dan sinkronisasi identitas ini adalah fondasi krusial untuk mengelola Microsoft Entra ID (Azure AD), Microsoft Entra Domain Services, serta implementasi Hybrid Cloud Connect di masa mendatang.
 
 
