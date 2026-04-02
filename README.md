@@ -60,7 +60,8 @@ Mengeksekusi proses penggabungan domain menggunakan backdoor command adcli untuk
 sudo adcli join --verbose --domain dimsum.local --domain-controller 192.168.18.100 --login-user Administrator
 
 ### Phase 5: Post-Join Configuration (SSSD & PAM)
-Membangun ulang konfigurasi /etc/sssd/sssd.conf agar daemon membaca database Active Directory:
+Membangun ulang konfigurasi `/etc/sssd/sssd.conf` dengan cara `sudo cat /etc/sssd/sssd.conf` agar daemon membaca database Active Directory:
+
 `[sssd]`
 
 `domains = dimsum.local`
