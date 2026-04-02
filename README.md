@@ -31,8 +31,10 @@ Merancang dan mengimplementasikan arsitektur Manajemen Identitas Terpusat (Centr
 
 ### Phase 2: Linux Client Provisioning
 Memodifikasi *resolver* DNS di Ubuntu agar merujuk sepenuhnya ke IP Windows Server (`192.168.18.100`), dilanjutkan dengan instalasi komponen integrasi identitas:
-sudo apt update
-sudo apt install realmd adcli sssd sssd-tools samba-common krb5-user packagekit
+
+`sudo apt update`
+
+`sudo apt install realmd adcli sssd sssd-tools samba-common krb5-user packagekit`
 
 ### Phase 3: Kerberos Configuration & Time Synchronization
 Kerberos sangat sensitif terhadap asinkronisasi waktu dan ketidakcocokan identitas (FQDN).
@@ -59,17 +61,39 @@ sudo adcli join --verbose --domain dimsum.local --domain-controller 192.168.18.1
 
 ### Phase 5: Post-Join Configuration (SSSD & PAM)
 Membangun ulang konfigurasi /etc/sssd/sssd.conf agar daemon membaca database Active Directory:
-[sssd]
-domains = dimsum.local
-config_file_version = 2
-services = nss, pam
+`[sssd]`
 
-[domain/dimsum.local]
-ad_domain = dimsum.local
-krb5_realm = DIMSUM.LOCAL
-id_provider = ad
-access_provider = ad
-fallback_homedir = /home/%u@%d
+`domains = dimsum.local`
+
+`config_file_version = 2`
+
+`services = nss, pam`
+
+
+`[domain/dimsum.local]`
+
+`ad_domain = dimsum.local`
+
+`krb5_realm = DIMSUM.LOCAL`
+
+`realmd_tags = manages-system joined-with-adcli`
+
+`cache_credentials = True`
+
+`id_provider = ad`
+
+`krb5_store_password_if_offline = True`
+
+`default_shell = /bin/bash`
+
+`ldap_id_mapping = True`
+
+`use_fully_qualified_names = True`
+
+`fallback_homedir = /home/%u@%d`
+
+`access_provider = ad`
+
 
 Menyetel izin file secara ketat (chmod 600) dan me-restart layanan SSSD. Terakhir, mengaktifkan pam_mkhomedir melalui sudo pam-auth-update agar direktori /home/budi01@dimsum.local otomatis terbuat saat otentikasi pertama.
 
