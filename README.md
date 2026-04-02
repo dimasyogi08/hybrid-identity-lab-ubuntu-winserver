@@ -42,22 +42,26 @@ Kerberos sangat sensitif terhadap asinkronisasi waktu dan ketidakcocokan identit
 Melakukan sinkronisasi NTP (Network Time Protocol) antara Klien dan Server (Toleransi deviasi maksimal 5 menit).
 
 Mendefinisikan pemetaan Realm secara eksplisit pada /etc/krb5.conf:
-[libdefaults]
-    default_realm = DIMSUM.LOCAL
 
-[realms]
-    DIMSUM.LOCAL = {
+`[libdefaults]
+    default_realm = DIMSUM.LOCAL`
+
+`[realms]`
+    `DIMSUM.LOCAL = {
         kdc = 192.168.18.100
         admin_server = 192.168.18.100
-    }
+    }`
 
-[domain_realm]
-    .dimsum.local = DIMSUM.LOCAL
-    dimsum.local = DIMSUM.LOCAL
+
+`[domain_realm]`
+    `.dimsum.local = DIMSUM.LOCAL`
+    
+    `dimsum.local = DIMSUM.LOCAL`
 
 ### Phase 4: Active Directory Domain Join
 Mengeksekusi proses penggabungan domain menggunakan backdoor command adcli untuk bypass masalah resolusi GUI/realm standar, serta memastikan Computer Object terdaftar di database AD:
-sudo adcli join --verbose --domain dimsum.local --domain-controller 192.168.18.100 --login-user Administrator
+
+`sudo adcli join --verbose --domain dimsum.local --domain-controller 192.168.18.100 --login-user Administrator`
 
 ### Phase 5: Post-Join Configuration (SSSD & PAM)
 Membangun ulang konfigurasi `/etc/sssd/sssd.conf` dengan cara `sudo cat /etc/sssd/sssd.conf` agar daemon membaca database Active Directory:
